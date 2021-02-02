@@ -8,19 +8,21 @@ namespace AdvSrvTools.Handlers
     {
         public void OnLeft(LeftEventArgs ev)
         {
+            if (AdvSrvTools.Instance.Config.VerboseMode) Log.Info("left event trigerred");
+            if (AdvSrvTools.Instance.Config.RestartRoundOnEmpty)
+            {
+                if (AdvSrvTools.Instance.Config.VerboseMode) Log.Info("entered RR on empty if, players:" + (Exiled.API.Features.Player.List.Count()-1));
+                if (Round.IsStarted && (Exiled.API.Features.Player.List.Count() <= 1))
+                {
+                    Log.Info("No players online and round started, restarting it");
+                    Round.Restart(true, false);
+                }
+            }
             int duration = AdvSrvTools.Instance.Config.LeftMessageDuration;
             if (duration < 0)
             {
                 string message = AdvSrvTools.Instance.Config.LeftMessage.Replace(oldValue: "{player}", newValue: ev.Player.Nickname);
                 Exiled.API.Features.Map.Broadcast((ushort)duration, message);
-            }
-            if (AdvSrvTools.Instance.Config.RestartRoundOnEmpty)
-            {
-                if (Round.IsStarted && (Exiled.API.Features.Player.List.Count() <= 0))
-                {
-                    Log.Info("No players online and round started, restarting it");
-                    Round.Restart(true, false);
-                }
             }
         }
 

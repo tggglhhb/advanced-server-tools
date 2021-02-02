@@ -56,7 +56,7 @@ namespace AdvSrvTools.Commands.Player
                     return false;
                 }
             }
-            else if (arguments.At(0) == "cooldown" || arguments.At(0) == "cd")
+            else if (arguments.At(0) == "isenabled" || arguments.At(0) == "ie")
             {
                 if (arguments.Count > 1)
                 {
@@ -71,7 +71,7 @@ namespace AdvSrvTools.Commands.Player
                         response = "You cannot set the inventory cooldown of this player.";
                         return false;
                     }
-                    //Ply.Inventory.InventoryCooldown = 1f;
+                    //Ply.Inventory. = false;
                     string possessive = "s";
                     if (Ply.Nickname.EndsWith("s") || Ply.Nickname.EndsWith("S"))
                      {

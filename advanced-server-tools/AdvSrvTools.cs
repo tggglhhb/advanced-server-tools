@@ -9,7 +9,7 @@ namespace AdvSrvTools
     public class AdvSrvTools : Plugin<Config>
     {
         public override string Author { get; } = "Created by Hippolyte (hippo)";
-        public override string Name { get; } = "Advanced Server Events";
+        public override string Name { get; } = "Advanced Server Tools";
         public override Version Version { get; } = new Version(2, 0, 0);
 
         private static readonly Lazy<AdvSrvTools> LazyInstance = new Lazy<AdvSrvTools>(valueFactory: () => new AdvSrvTools());
@@ -25,10 +25,13 @@ namespace AdvSrvTools
         private AdvSrvTools()
         {
         }
-
         public override void OnEnabled()
         {
             RegisterEvents();
+            if (Instance.Config.RestartRoundOnEmpty)
+            {
+                Log.Info("Restart Round On Empty enabled!");
+            }
         }
 
         public override void OnDisabled()

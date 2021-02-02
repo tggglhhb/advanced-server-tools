@@ -7,6 +7,9 @@ namespace AdvSrvTools
     {
         public bool IsEnabled { get; set; } = true;
 
+        [Description("Enables highly detailled output")]
+        public bool VerboseMode { get; set; } = false;
+
         [Description("Restart the round if the round is still going while the server is empty (I always wanted this feature lmao)")]
         public bool RestartRoundOnEmpty { get; set; } = false;
 
