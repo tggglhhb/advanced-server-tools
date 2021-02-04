@@ -13,9 +13,9 @@ namespace AdvSrvTools.Commands.Player
     [CommandHandler(typeof(GameConsoleCommandHandler))]
     internal class PlayerInventory : ICommand
     {
-        public string Command { get; } = "playerinventory";
+        public string Command { get; } = "manageplayerinventory";
 
-        public string[] Aliases { get; } = { "pinv", "pi" };
+        public string[] Aliases { get; } = { "mpinv", "mpi" };
 
         public string Description { get; } = "A tool to manage players inventory";
 
@@ -28,8 +28,8 @@ namespace AdvSrvTools.Commands.Player
             }
             if (arguments.Count < 1)
             {
-                response = "Subcommands: clear (c), drop (d), reset (r). Will soon add the option to drop specific ammo types";
-                return false;
+                response = "Subcommands: clear (c), isenabled (ie), display(d)";
+                return true;
             }
             else if (arguments.At(0) == "clear" || arguments.At(0) == "c")
             {
@@ -53,7 +53,7 @@ namespace AdvSrvTools.Commands.Player
                 else
                 {
                     response = $"Clears the inventory of a player. Usage: {Command} c <user>";
-                    return false;
+                    return true;
                 }
             }
             else if (arguments.At(0) == "isenabled" || arguments.At(0) == "ie")
@@ -61,35 +61,67 @@ namespace AdvSrvTools.Commands.Player
                 if (arguments.Count > 1)
                 {
                     P Ply = P.Get(arguments.At(1));
+                    //Ply.Inventory.Invoke(methodName: );
                     if (Ply == null)
                     {
                         response = $"Player not found: {arguments.At(1)}";
                         return false;
                     }
-                    if (Ply.Role == RoleType.Spectator || Ply.Role == RoleType.None || Ply.Team == Team.SCP)
+                    if (arguments.Count > 2)
                     {
-                        response = "You cannot set the inventory cooldown of this player.";
-                        return false;
+                        if (bool.TryParse(arguments.At(1), out bool e))
+                        {
+                            Ply.Inventory.enabled = e;
+                            string possessive = "s";
+                            if (Ply.Nickname.EndsWith("s") || Ply.Nickname.EndsWith("S"))
+                            {
+                                possessive = "";
+                            }
+                            string ed;
+                            if (Ply.Inventory.enabled) ed = "enabled";
+                            else if (!Ply.Inventory.enabled) ed = "disabled";
+                            else ed = "error";
+                            response = $"{Ply.Nickname}'{possessive} inventory is now {ed}";
+                            return true;
+                        }
+                        else
+                        {
+                            string ed;
+                            if (Ply.Inventory.enabled) ed = "enabled";
+                            else if (!Ply.Inventory.enabled) ed = "disabled";
+                            else ed = "error";
+                            string possessive = "s";
+                            if (Ply.Nickname.EndsWith("s") || Ply.Nickname.EndsWith("S")) possessive = "";
+
+                            response = $"{Ply.Nickname}'{possessive} inventory is {ed}. Invalid bool (true/false): {Aliases[0]} {arguments.At(0)} >>{arguments.At(1)}<<";
+                            return false;
+                        }
                     }
-                    //Ply.Inventory. = false;
-                    string possessive = "s";
-                    if (Ply.Nickname.EndsWith("s") || Ply.Nickname.EndsWith("S"))
-                     {
-                        possessive = "";
-                     }
-                    response = $"{Ply.Nickname}'{possessive} inventory cooldown is now ";
-                    return true;
+                    else 
+                    {
+                        string ed;
+                        if (Ply.Inventory.enabled) ed = "enabled";
+                        else if (!Ply.Inventory.enabled) ed = "disabled";
+                        else ed = "error";
+                        string possessive = "s";
+                        if (Ply.Nickname.EndsWith("s") || Ply.Nickname.EndsWith("S")) possessive = "";
+
+                        response = $"{Ply.Nickname}'{possessive} inventory is {ed}.To edit this: {Aliases[0]} {arguments.At(0)} <true/false>";
+
+                        return true;
+                    }
                 }
                 else
                 {
-                    response = $"Clears the inventory of a player. Usage: {Command} c <user>";
-                    return false;
+                    response = $"Enables or disables the inventory of a player. Usage: {Command} ie <user> <true/false>";
+                    return true;
                 }
             }
-
-            //P Ply = P.Get(arguments.At(1));
-            //Ply.Inventory.Clear();
-            throw new NotImplementedException();
+            else
+            {
+                response = "Invalid subcommand. Subcommands: ";
+                return false;
+            }
         }
     }
 }

@@ -31,7 +31,7 @@ namespace AdvSrvTools.Commands
             {
                 if (arguments.Count >= 2)
                 {
-                    if (Single.TryParse(arguments.At(1), out float newdt))
+                    if (float.TryParse(arguments.At(1), out float newdt))
                     {
                         Warhead.DetonationTimer = newdt;
                         float dt = Warhead.DetonationTimer;
