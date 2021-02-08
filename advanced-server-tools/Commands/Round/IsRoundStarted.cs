@@ -9,7 +9,7 @@ namespace AdvSrvTools.Commands.Round
     {
         public string Command { get; } = "isroundstarted";
 
-        public string[] Aliases { get; } = { "isr" };
+        public string[] Aliases { get; } = { "irs" };
 
         public string Description { get; } = "Check if round is started";
 
@@ -18,7 +18,7 @@ namespace AdvSrvTools.Commands.Round
             bool isr = Exiled.API.Features.Round.IsStarted;
             string ed;
             if (isr) ed = "";
-            else ed = "'nt";
+            else ed = "n't";
             response = $"The round is{ed} started";
             return true;
         }
