@@ -57,7 +57,7 @@ namespace AdvSrvTools.Commands
                     string sp;
                     if (dt != 1) sp = "s";
                     else sp = "";
-                    response = $"The warhead will detonate in T minus {dt} second{sp}. To change this, send the command again with the new timer: \"{Command} dt 90\"";
+                    response = $"The warhead will detonate in T minus {dt} second{sp}. To change this, send the command again with the new timer: \"{Command} dt [<new_timer>]\"";
                     return true;
                 }
             }
@@ -96,7 +96,7 @@ namespace AdvSrvTools.Commands
                     string ed;
                     if (ls) ed = "enabled";
                     else ed = "disabled";
-                    response = $"The warhead lever is on \"{ed}\". To edit this, send \"{Command} ls <true/false>\"";
+                    response = $"The warhead lever is on \"{ed}\". To edit this, send \"{Command} ls [<true/false>]\"";
                     return true;
                 }
             }
@@ -135,7 +135,7 @@ namespace AdvSrvTools.Commands
                     string ed;
                     if (bs) ed = "open";
                     else ed = "closed";
-                    response = $"The warhead button cover is {ed}. To edit this, send \"{Command} bs <true/false>\"";
+                    response = $"The warhead button cover is {ed}. To edit this, send \"{Command} bs [<true/false>]\"";
                     return true;
                 }
             }
@@ -199,7 +199,7 @@ namespace AdvSrvTools.Commands
                     string ed;
                     if (il) ed = " locked";
                     else ed = "n't locked";
-                    response = $"The warhead is{ed}. To edit this, send \"{Command} il <true/false>\"";
+                    response = $"The warhead is{ed}. To edit this, send \"{Command} il [<true/false>]\"";
                     return true;
                 }
             }

@@ -88,9 +88,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AdvSrvTools.cs" />
+    <Compile Include="Commands\Round\IsRoundStarted.cs" />
+    <Compile Include="Updater.cs" />
     <None Include="Commands\template.cs" />
     <Compile Include="Commands\Player\PlayerAmmo.cs" />
     <Compile Include="Commands\Player\PlayerInventory.cs" />
+    <Compile Include="Commands\UpdateAST.cs" />
     <Compile Include="Commands\Warhead\WarheadSettings.cs" />
     <Compile Include="Handlers\Map.cs" />
     <Compile Include="Handlers\Warhead.cs" />
