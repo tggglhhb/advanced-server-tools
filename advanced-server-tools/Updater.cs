@@ -25,7 +25,7 @@ namespace AdvSrvTools
                 }
                 if (nv == Version)
                 {
-                    if (manual) Log.Warn("Plugin already to the lastest version!");
+                    if (manual || AdvSrvTools.Instance.Config.VerboseMode) Log.Warn("Plugin already to the lastest version!");
                     return;
                 }
 
