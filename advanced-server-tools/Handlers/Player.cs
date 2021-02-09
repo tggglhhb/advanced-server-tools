@@ -26,7 +26,7 @@ namespace AdvSrvTools.Handlers
             }
         }
 
-        public void OnJoined(JoinedEventArgs ev)
+        public void OnVerified(JoinedEventArgs ev)
         {
             string message = AdvSrvTools.Instance.Config.JoinedMessage.Replace(oldValue: "{player}", newValue: ev.Player.Nickname);
             int duration = AdvSrvTools.Instance.Config.JoinedMessageDuration;

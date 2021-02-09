@@ -63,7 +63,7 @@ namespace AdvSrvTools
             Server.RoundStarted += server.OnRoundStarted;
 
             Player.Left += player.OnLeft;
-            Player.Joined += player.OnJoined;
+            Player.Joined += player.OnVerified;
             //    Player.InteractingDoor += player.OnInteractingDoor;
         }
 
@@ -73,7 +73,7 @@ namespace AdvSrvTools
             Server.RoundStarted -= server.OnRoundStarted;
 
             Player.Left -= player.OnLeft;
-            Player.Joined -= player.OnJoined;
+            Player.Joined -= player.OnVerified;
 
             server = null;
             player = null;
@@ -91,12 +91,14 @@ namespace AdvSrvTools
                     yield return Timing.WaitForSeconds(1);
                     if (Updater.run) 
                     { 
-                        Updater.RunUpdater(true);
+                        if (!Updater.running) Updater.RunUpdater(true);
+                        if (!Updater.running) Log.Warn("Updater is already running.");
                         Updater.run = false;
                     }
                 }
-                
-                Updater.RunUpdater(false);
+
+                if (!Updater.running) Updater.RunUpdater(false);
+                if (!Updater.running && Config.VerboseMode) Log.Warn("Updater is already running.");
             }
         }
     }
