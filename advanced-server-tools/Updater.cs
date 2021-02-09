@@ -9,7 +9,9 @@ namespace AdvSrvTools
     internal static class Updater
     {
         private static readonly string Version = "0.0.0";
-        internal static async Task RunUpdater(/*int waitTime = 0*/)
+        public static bool running = false;
+        public static bool run = false;
+        internal static async Task RunUpdater(bool manual/*int waitTime = 0*/)
         {
             //if (waitTime != 0) await Task.Delay(waitTime);
 
@@ -23,7 +25,7 @@ namespace AdvSrvTools
                 }
                 if (nv == Version)
                 {
-                    Log.Warn("Plugin already to the lastest version!");
+                    if (manual) Log.Warn("Plugin already to the lastest version!");
                     return;
                 }
 

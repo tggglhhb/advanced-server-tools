@@ -19,12 +19,9 @@ namespace AdvSrvTools.Commands
 
         public bool Execute(ArraySegment<string> arguments, ICommandSender sender, out string response)
         {
-            Update();
-
+            Updater.run = true;
             response = "Updater launched, check server console for details";
             return true;
         }
-
-        private async void Update() { await Updater.RunUpdater(); }
     }
 }

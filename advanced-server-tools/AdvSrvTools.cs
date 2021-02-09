@@ -2,6 +2,7 @@
 using Exiled.API.Features;
 using System;
 using System.Collections.Generic;
+using MEC;
 using Player = Exiled.Events.Handlers.Player;
 using Server = Exiled.Events.Handlers.Server;
 
@@ -20,6 +21,8 @@ namespace AdvSrvTools
 
         internal static AdvSrvTools Singleton;
 
+        private CoroutineHandle update;
+
         private Handlers.Player player;
         private Handlers.Server server;
         private Handlers.Warhead warhead;
@@ -35,6 +38,11 @@ namespace AdvSrvTools
             if (Instance.Config.RestartRoundOnEmpty)
             {
                 Log.Info("Restart Round On Empty enabled!");
+            }
+            if (Config.AutoUpdates >= 60)
+            {
+                Updater.RunUpdater(false);
+                update = Timing.RunCoroutine(AutoUpdates());
             }
         }
 
@@ -73,6 +81,23 @@ namespace AdvSrvTools
             map = null;
 
             Singleton = null;
+        }
+        private IEnumerator<float> AutoUpdates()
+        {
+            while (true)
+            {
+                for (int i = 0; i < Config.AutoUpdates; i++)
+                {
+                    yield return Timing.WaitForSeconds(1);
+                    if (Updater.run) 
+                    { 
+                        Updater.RunUpdater(true);
+                        Updater.run = false;
+                    }
+                }
+                
+                Updater.RunUpdater(false);
+            }
         }
     }
 }
