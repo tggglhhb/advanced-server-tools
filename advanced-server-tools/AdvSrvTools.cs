@@ -90,15 +90,15 @@ namespace AdvSrvTools
                 {
                     yield return Timing.WaitForSeconds(1);
                     if (Updater.run) 
-                    { 
+                    {
+                        if (Updater.running) Log.Warn("Updater is already running.");
                         if (!Updater.running) Updater.RunUpdater(true);
-                        if (!Updater.running) Log.Warn("Updater is already running.");
                         Updater.run = false;
                     }
                 }
 
+                if (Updater.running && Config.VerboseMode) Log.Warn("Updater is already running.");
                 if (!Updater.running) Updater.RunUpdater(false);
-                if (!Updater.running && Config.VerboseMode) Log.Warn("Updater is already running.");
             }
         }
     }
