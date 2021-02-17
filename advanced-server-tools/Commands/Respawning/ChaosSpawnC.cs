@@ -14,7 +14,7 @@ namespace AdvSrvTools.Commands
     {
         public string Command { get; } = "spawnchaos";
 
-        public string[] Aliases { get; } = { "sch" };
+        public string[] Aliases { get; } = { "sci" };
 
         public string Description { get; } = "Spawns Chaos with the van";
 
