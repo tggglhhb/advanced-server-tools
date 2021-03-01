@@ -9,7 +9,7 @@ namespace AdvSrvTools
 {
     internal static class Updater
     {
-        private static readonly string Version = "0.0.0";
+        private static readonly string Version = "0.0.2";
         public static bool running = false;
         public static bool run = false;
         internal static async Task RunUpdater(bool manual/*int waitTime = 0*/)
@@ -34,8 +34,10 @@ namespace AdvSrvTools
                 }
                 if (AdvSrvTools.Instance.Config.VerboseMode) Log.Info($"Got new version: {nv}");
 
-                var location = AdvSrvTools.Singleton.GetPath();
-                if (location == null)
+                string assemblyFolder = new System.Uri(System.Reflection.Assembly.GetExecutingAssembly().CodeBase).LocalPath;
+                if (assemblyFolder.StartsWith("file:\\")) assemblyFolder = assemblyFolder.Remove(0, 6);
+                var location = Path.Combine(assemblyFolder, "AdvSrvTools.dll");
+                if (!File.Exists(location))
                 {
                     Log.Error("The updater could not determine the plugin path. Make sure the plugin is named \"AdvSrvTools.dll\".");
                     running = false;

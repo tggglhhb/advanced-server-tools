@@ -12,14 +12,14 @@ namespace AdvSrvTools
     {
         public override string Author { get; } = "Created by Hippolyte (hippo)";
         public override string Name { get; } = "Advanced Server Tools";
-        public override Version Version { get; } = new Version(0, 0, 1);
+        public override Version Version { get; } = new Version(0, 0, 2);
 
         private static readonly Lazy<AdvSrvTools> LazyInstance = new Lazy<AdvSrvTools>(valueFactory: () => new AdvSrvTools());
         public static AdvSrvTools Instance => LazyInstance.Value;
 
         public override PluginPriority Priority { get; } = PluginPriority.Medium;
 
-        internal static AdvSrvTools Singleton;
+//        internal static AdvSrvTools Singleton;
 
         private CoroutineHandle update;
 
@@ -33,7 +33,7 @@ namespace AdvSrvTools
         }
         public override void OnEnabled()
         {
-            Singleton = this;
+//            Singleton = this;
             RegisterEvents();
             if (Instance.Config.RestartRoundOnEmpty)
             {
@@ -51,9 +51,9 @@ namespace AdvSrvTools
             UnregisterEvents();
         }
 
-        public IEnumerator<float> RegisterEvents()
+        public void RegisterEvents()
         {
-            if (Singleton == null) yield break;
+//            if (Singleton == null) yield break;
             player = new Handlers.Player();
             server = new Handlers.Server();
             warhead = new Handlers.Warhead();
@@ -80,7 +80,7 @@ namespace AdvSrvTools
             warhead = null;
             map = null;
 
-            Singleton = null;
+//            Singleton = null;
         }
         private IEnumerator<float> AutoUpdates()
         {
